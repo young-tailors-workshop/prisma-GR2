@@ -6,6 +6,11 @@ import { Args } from 'prisma-client-lib/dist/types'
 async function signUp(_: any, args: Args, { prisma }: IContext) {
 	try {
 		const { name, email, password } = args
+		const existedUser = prisma.user({ email })
+		if (existedUser) {
+			throw 'Email already exist !'
+		}
+
 		const hashPassword = await Bcryptjs.hash(password, 10)
 		const user = await prisma.createUser({
 			name,
@@ -70,8 +75,14 @@ async function createTicket(
 	}
 }
 
+async function updateUser(parent: any, args: Args, { prisma }: IContext) {
+	const { id, count } = args
+	return await prisma.updateUser({ data: { count }, where: { id } })
+}
+
 export default {
 	signUp,
 	login,
 	createTicket,
+	updateUser,
 }
