@@ -12,6 +12,7 @@ async function me(_: ParentNode, __: Args, context: IContext) {
 	return user
 }
 
+
 export default {
 	getUsers,
 	me,
