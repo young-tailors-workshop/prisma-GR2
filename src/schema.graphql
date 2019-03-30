@@ -1,0 +1,34 @@
+type User {
+	id: ID!
+	name: String!
+	email: String!
+	count: Int
+	checkHadTicket: Boolean
+	ticket: Ticket
+}
+
+type Ticket {
+	id: ID!
+	title: String!
+	owner: User
+}
+
+type Query {
+	feed(skip: Int, first: Int): Feed!
+	me: User
+}
+
+type Feed {
+	user: [User!]!
+}
+
+type Mutation {
+	login(email: String!, password: String!): AuthPayload
+	signUp(name: String!, email: String!, password: String!): AuthPayload
+	createTicket(title: String!, owner: String!)
+}
+
+type AuthPayload {
+	user: User!
+	token: String
+}
