@@ -14,7 +14,7 @@ export function signToken(userId: string) {
 	return token
 }
 
-export async function getUserByToken({ request, prisma }: IContext) {
+export async function getUserByToken({ prisma, request }: IContext) {
 	const { headers } = request
 	try {
 		const token = headers.authorization!.split(' ')[1]

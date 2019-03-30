@@ -2,15 +2,9 @@ import { IContext } from '../types/Context'
 import { getUserByToken } from '../ultis'
 import { Args } from 'prisma-client-lib/dist/types'
 
-async function feed(_: ParentNode, args: Args, { prisma }: IContext) {
-	const { skip, first } = args
-	const posts = await prisma.tickets({
-		skip,
-		first,
-	})
-	return {
-		posts,
-	}
+async function getUsers(_: ParentNode, __: Args, { prisma }: IContext) {
+	const user = await prisma.users()
+	return user
 }
 
 async function me(_: ParentNode, __: Args, context: IContext) {
@@ -19,6 +13,6 @@ async function me(_: ParentNode, __: Args, context: IContext) {
 }
 
 export default {
-	feed,
+	getUsers,
 	me,
 }

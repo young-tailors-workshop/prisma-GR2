@@ -48,20 +48,23 @@ async function login(_: any, args: Args, { prisma }: IContext) {
 	}
 }
 
-async function createTicket(_: any, args: Args, { prisma }: IContext) {
+async function createTicket(
+	parent: any,
+	args: Args,
+	{ prisma, request }: IContext,
+) {
 	try {
-		const { title, owner } = args
+		const user = await getUserByToken({ prisma, request })
+		const { title } = args
 		const ticket = await prisma.createTicket({
+			title,
 			owner: {
 				connect: {
-					id: owner as any,
+					id: user.id,
 				},
 			},
-			title,
 		})
-		return {
-			ticket,
-		}
+		return ticket
 	} catch (error) {
 		throw error
 	}
@@ -70,5 +73,5 @@ async function createTicket(_: any, args: Args, { prisma }: IContext) {
 export default {
 	signUp,
 	login,
-	//createTicket,
+	createTicket,
 }

@@ -14,18 +14,14 @@ type Ticket {
 }
 
 type Query {
-	feed(skip: Int, first: Int): Feed!
+	getUsers: [User!]!
 	me: User
-}
-
-type Feed {
-	user: [User!]!
 }
 
 type Mutation {
 	login(email: String!, password: String!): AuthPayload
 	signUp(name: String!, email: String!, password: String!): AuthPayload
-	createTicket(title: String!, owner: String!)
+	createTicket(title: String!): Ticket
 }
 
 type AuthPayload {
